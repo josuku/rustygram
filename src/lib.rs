@@ -44,3 +44,12 @@ pub async fn send_message(
 ) -> Result<(), errors::ErrorResult> {
     bot.send_message(msg, options).await
 }
+
+pub async fn send_picture(
+    bot: &Bot,
+    picture_bytes: Vec<u8>,
+    file_name: &str,
+    caption: &str,
+) -> Result<(), errors::ErrorResult> {
+    bot.send_picture(picture_bytes, file_name, caption).await
+}

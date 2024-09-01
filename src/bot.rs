@@ -191,6 +191,56 @@ impl Bot {
         }
     }
 
+    pub async fn send_picture(
+        &self,
+        picture_bytes: Vec<u8>,
+        file_name: &str,
+        caption: &str,
+    ) -> Result<(), ErrorResult> {
+        let part = multipart::Part::bytes(picture_bytes)
+            .file_name(file_name.to_string())
+            .mime_str("image/jpg")?;
+
+        let media = serde_json::json!([
+            {
+                "type": "document",
+                "media": "attach://file",
+                "caption": caption
+            }
+        ]);
+
+        let form = multipart::Form::new()
+            .text("chat_id", self.chat_id.to_string())
+            .text("media", media.to_string())
+            .part("file", part);
+
+        let response = self
+            .client
+            .post(method_url(self.api_url(), self.token(), "sendMediaGroup"))
+            .header(reqwest::header::CONTENT_TYPE, "multipart/form-data")
+            .multipart(form)
+            .send()
+            .await?;
+
+        if response.status().is_success() {
+            Ok(())
+        } else {
+            let err_result =
+                response
+                    .json::<TelegramErrorResult>()
+                    .await
+                    .map_err(|_| ErrorResult {
+                        code: StatusCode::ErrorInternalError.as_u16(),
+                        msg: "Error converting telegram error response to json".to_string(),
+                    })?;
+
+            Err(ErrorResult {
+                code: StatusCode::ErrorInternalError.as_u16(),
+                msg: err_result.description.to_owned(),
+            })
+        }
+    }
+
     fn build_request_obj(&self, msg: &str, options: Option<SendMessageOption>) -> RequestObj {
         let parse_mode = options
             .as_ref()
