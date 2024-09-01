@@ -1,6 +1,7 @@
 use std::fmt::{Display, Error, Formatter};
 
-use reqwest::{multipart, StatusCode};
+// use reqwest::{multipart, StatusCode};
+use reqwest::StatusCode;
 /// ErrorResult usually returned to indicate result from calling APIs related
 /// functions.
 #[derive(Debug)]

@@ -1,5 +1,5 @@
-use reqwest::header::HeaderMap;
-use reqwest::header::HeaderValue;
+// use reqwest::header::HeaderMap;
+// use reqwest::header::HeaderValue;
 use reqwest::multipart;
 use reqwest::Client;
 use std::fs;
@@ -14,7 +14,7 @@ use crate::{
 
 pub const TELEGRAM_API_URL: &str = "https://api.telegram.org";
 const SEND_MESSAGE_METHOD: &str = "sendMessage";
-const SEND_MEDIA_METHOD: &str = "sendMediaGroup";
+// const SEND_MEDIA_METHOD: &str = "sendMediaGroup";
 
 /// A requests sender.
 ///

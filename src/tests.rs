@@ -4,7 +4,8 @@ mod test {
         types::{SendMessageOption, SendMessageParseMode},
         *,
     }; // import lib.rs
-    use std::{env, sync::Arc};
+       // use std::{env, sync::Arc};
+    use std::env;
 
     /// Reading bot token, and chat id for inteacting with telegram bot.
     ///
