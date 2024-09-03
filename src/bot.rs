@@ -114,13 +114,13 @@ impl Bot {
                 } else {
                     match res.json::<TelegramErrorResult>().await {
                         Ok(err_result) => {
-                            return utils::create_error_result_str(
+                            utils::create_error_result_str(
                                 StatusCode::ErrorInternalError,
                                 &err_result.description.to_owned(),
                             )
                         }
                         Err(_) => {
-                            return utils::create_error_result_str(
+                            utils::create_error_result_str(
                                 StatusCode::ErrorInternalError,
                                 "Error converting telegram error response to json",
                             )
@@ -129,7 +129,7 @@ impl Bot {
                 }
             }
             Err(e) => {
-                return utils::create_error_result_str(
+                utils::create_error_result_str(
                     StatusCode::ErrorInternalError,
                     &format!("Error sending HTTP request; err={}", e),
                 )
